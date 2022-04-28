@@ -28,43 +28,41 @@ function Register() {
 
   const registerMe = async (e) => {
     e.preventDefault();
-    showmessage();
+
     try {
       const data = await axios.post("http://localhost:5000/user/SignUp", user);
-      console.log(data);
-      setResult(data);
+      console.log(data.status);
+      localStorage.setItem("phone_number", data.data.result.phoneNo);
+      if (data.status == "201") {
+        toast.success("User Register", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          history.push("/verification");
+        }, 2000);
+      } else {
+        toast.warn("Phone Number Already Exist !!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          history.push("/login");
+        }, 2000);
+      }
     } catch (error) {
       // console.log(error.response.status, "==============");
       setResult(error.response.status);
-    }
-  };
-  const showmessage = () => {
-    if (result == "200") {
-      toast.success("User Register", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setTimeout(() => {
-        history.push("/verification");
-      }, 2000);
-    } else {
-      toast.warn("Phone Number Already Exist !!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setTimeout(() => {
-        history.push("/login");
-      }, 2000);
     }
   };
 

@@ -6,7 +6,9 @@ import OfferModal from "./OfferModal";
 function Navbar() {
   //console.log("navbar rendered");
   const token = localStorage.getItem("token");
-
+  const logout = () => {
+    window.localStorage.clear();
+  };
   return (
     <>
       <div className="loginBar container-fluid bg-dark d-flex flex-wrap align-items-center">
@@ -37,6 +39,7 @@ function Navbar() {
             <div className="">
               <Link to="/login">
                 <button
+                  onClick={logout}
                   type="button"
                   className="btn btn-outline-light btn-lg text-white loginbtn me-2"
                 >
